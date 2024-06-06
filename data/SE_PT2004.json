@@ -1,0 +1,26 @@
+[
+  {
+    "geometry": {
+      "type": "point",
+      "latitude": -8.83901633010701,
+      "longitude": 13.2388848738615
+    },
+    "attributes": {
+      "ObjectType_id": 2,
+      "FID": 2004000,
+      "identificação": "Casa Angelo Luango",
+      "estado": 0,
+      "País": "Angola",
+      "Província": "Luanda",
+      "Municipio": "Luanda",
+      "Distrito": "Maianga",
+      "Bairro": "Bairro_Cassenda",
+      "Rua": "Rua_17_Maianga",
+      "H": 102,
+      "Secção": "VAV_300mm2",
+      "U2": "400V",
+      "Frequência": "50Hz",
+      "Potência": "25kVA"
+    }
+  }
+]

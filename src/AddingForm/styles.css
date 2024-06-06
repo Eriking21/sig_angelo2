@@ -1,0 +1,133 @@
+form#adding-form {
+  padding: 1.75em;
+  font-size: 1.4rem;
+  transition: transform 0.6s;
+}
+
+#adding-form label,
+#adding-form span.error {
+  display: block;
+}
+
+#adding-form h2.title {
+color: #93cbdd;
+  word-spacing: 0.15em;
+  text-align: start;
+  font-size: 2rem;
+  margin-top: 0.25em;
+  margin-bottom: 1.5em;
+  font-weight: bold;
+}
+
+#adding-form label {
+  font-size: 1.4rem;
+  padding-bottom: 0.2em;
+  color: rgba(44, 51, 53, 0.707);
+  font-weight: 600;
+  width: 100%;
+}
+
+#adding-form :focus {
+  outline: none;
+}
+
+#adding-form button,
+#adding-form input[type="submit"] {
+  justify-content: center;
+  padding: 0.45rem 1.8rem;
+  box-sizing: border-box;
+  font-size: 1.25rem;
+  border-radius: 0.25rem;
+  outline: none;
+}
+
+#adding-form div.Flexible_Wrapper button {
+  color: #93cbdd;
+  background-color: #dcdddd77;
+}
+#adding-form .Flexible_Wrapper button:hover {
+  background-color: #effaff;
+}
+
+#adding-form div.Flexible_Wrapper button.selected,
+#adding-form input[type="submit"] {
+  background-color: #93cbdd;
+  color: rgb(255, 255, 255);
+}
+
+#adding-form div.Flexible_Wrapper element,
+#adding-form div.Flexible_Wrapper select,
+#adding-form div.Flexible_Wrapper span,
+#adding-form div.Flexible_Wrapper input {
+  display: inline;
+  color: black;
+  font-size: 1.15rem;
+  border: none;
+  outline: none;
+  border-width: 0;
+  background-color: transparent;
+  overflow-x: hidden;
+  padding: 0;
+}
+
+#adding-form button,
+#adding-form div.Flexible_Wrapper div.Flexible_Wrapper,
+#adding-form div.Selection div.Flexible_Wrapper,
+#adding-form div.TextField div.Flexible_Wrapper {
+  padding: 0.45rem 0.8rem;
+  max-width: 100%;
+  box-sizing: border-box;
+  background-color: #effaff77;
+}
+
+#adding-form div div.Flexible_Wrapper:hover {
+  background-color: #effaff;
+  border-color: #5776818b;
+}
+
+#adding-form div.Flexible_Wrapper div.Flexible_Wrapper:focus-within,
+#adding-form div.Selection div.Flexible_Wrapper:focus-within,
+#adding-form div.TextField div.Flexible_Wrapper:focus-within {
+  background-color: #effaff;
+  border-color: #93cbdd;
+}
+
+#adding-form div.Selection div.Flexible_Wrapper select,
+#adding-form div.Flexible_Wrapper input {
+  flex: 1;
+  display: block;
+}
+form#adding-form input[type="submit"]:hover {
+  background-color: #93cbdd;
+}
+#adding-form div.Flexible_Wrapper input[type="number"] {
+  text-align: end;
+}
+#adding-form div.Flexible_Wrapper select {
+  text-align: center;
+}
+
+#adding-form div.Selection,
+#adding-form div.TextField {
+  padding-bottom: 1.5rem;
+}
+#adding-form button {
+  height: 2.5rem;
+}
+#adding-form .Flexible_Wrapper {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+}
+.InputBorder {
+  border-radius: 0.4rem;
+  border-color: rgba(95, 135, 143, 0.384);
+  border-style: solid;
+  border-width: 2px;
+}
+
+
+#adding-form div.Flexible_Wrapper select option:hover {
+  background-color:  #b3d8d8 !important;
+}

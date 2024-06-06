@@ -1,5 +1,5 @@
 {
-  "name": "sig_danny",
+  "name": "sig_angelo",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,18 +9,24 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.3"
+    "@arcgis/core": "^4.29.10",
+    "@types/proper-lockfile": "^4.1.4",
+    "esri-loader": "^3.7.0",
+    "fs": "0.0.1-security",
+    "next": "14.2.3",
+    "proper-lockfile": "^4.1.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.2.1"
   },
   "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.3"
+    "@types/node": "^20.14.2",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.2.3",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.4.5"
   }
 }

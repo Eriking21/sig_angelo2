@@ -1,0 +1,14 @@
+/* buttonAnimations.css */
+
+
+@keyframes splashAnimation {
+  0% {
+    width: 0;
+    height: 0;
+  }
+  100% {
+    width: 100px; /* Adjust the width to control the splash size */
+    height: 100px; /* Adjust the height to control the splash size */
+    opacity: 0;
+  }
+}

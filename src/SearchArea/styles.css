@@ -1,0 +1,34 @@
+#searchBar:focus {
+  outline: none;
+}
+.SearchItem {
+  margin: 0 1rem;
+  border-bottom: 3px inset #8cc0d099;
+  height: 2.5rem;
+  background-color: #ffffff12;
+  border-radius: .3rem;
+}
+::placeholder {
+  color: #b9b8a976;
+  opacity: 1; /* Firefox */
+}
+.SearchItem:active,
+.SearchItem.active,
+.SearchItem:hover {
+  margin: 0 0.45rem;
+  padding: 0 0.3rem;
+  border-width: 4px;
+  border-style: solid;
+   border-color: #93cbdd;
+  background-color: #d8f7f5;
+   border-radius: 0.75rem;
+}
+
+
+:hover > .hidden-content{
+  visibility: visible;
+}
+
+.hidden-content{
+  visibility: hidden;
+}

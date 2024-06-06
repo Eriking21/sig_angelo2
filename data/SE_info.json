@@ -1,0 +1,60 @@
+[
+  {
+    "geometry": {
+      "type": "point",
+      "latitude": -8.83620644,
+      "longitude": 13.23321944
+    },
+    "attributes": {
+      "ObjectType_id": 0,
+      "FID": 0,
+      "identificação": "SE_Maianga",
+      "estado": "0",
+      
+      "País": "Angola",
+      "Província": "Luanda",
+      "Municipio": "Luanda",
+      "Distrito": "Maianga",
+      "Bairro": "Alvalade",
+      "Rua": "Avenida_Comandante_Gika",
+      "H": 10,
+      "Cor da Linha": "#0077FF",
+      "Empresa": "ENDE_EP",
+      "Ano": 1990,
+      "P1": "50MVA",
+      "P2": "40MVA",
+      "U1": "60kV",
+      "U2": "15kV",
+      "Secção": "300 - 400"
+    }
+  },
+  {
+    "geometry": {
+      "type": "point",
+      "latitude": -8.83670077,
+      "longitude": 13.23259898
+    },
+    "attributes": {
+      "ObjectType_id": 0,
+      "FID": 1,
+      "identificação": "SE_Marteres",
+      "estado": "0",
+
+      "País": "Angola",
+      "Província": "Luanda",
+      "Municipio": "Luanda",
+      "Distrito": "Maianga",
+      "Bairro": "Marteres_Kifangondo",
+      "Rua": "01_MARTERES_KIFANGONDO",
+      "H": 10,
+      "Cor da Linha": "#ffff00",
+      "Empresa": "ENDE_EP",
+      "Ano": 2018,
+      "P1": "50MVA",
+      "P2": "40MVA",
+      "U1": "60kV",
+      "U2": "15kV",
+      "Secção": "300 - 400"
+    }
+  }
+]

@@ -1,0 +1,11 @@
+div.esri-attribution__powered-by,
+div.esri-attribution__sources{
+    display: none;
+}
+
+.esri-view .esri-view-surface--inset-outline:after,
+.esri-view .esri-view-surface--inset-outline:focus,
+.esri-view .esri-view-surface--inset-outline{
+    outline: none !important;
+    border:none
+}
