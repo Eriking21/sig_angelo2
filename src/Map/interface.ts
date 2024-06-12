@@ -75,9 +75,17 @@ const mapInterface: MapInterface = {
   promises: {},
   updateFeatures: async (response) => {
     const data = new erimClientData(response);
-    mapInterface.objects = [data.subs, data.trafos.flat()];
-    const lineColors: { value: number; color: number[] | string }[] = [];
+    mapInterface.objects = [
+      data.subs,
+      data.trafos.flat(),
+      data.consumers.flat(),
+    ];
 
+    const lineColors: { value: number; color: number[] | string }[] = [];
+    const consumerSource = data.consumers.map((consumerList) => {
+      const id = consumerList[0].attributes.FID / 1000;
+      for (const t of data.trafos.flat()) if (t.attributes.FID == id) return t;
+    });
     function addColor({
       FID,
       "Cor da Linha": Cor_da_Linha,
@@ -120,9 +128,34 @@ const mapInterface: MapInterface = {
           objectIdField: "FID",
           fields: getLineFields(),
           source: [
+            ... consumerSource.flatMap((PT,index) => {
+              addColor({FID: PT!.attributes.FID, "Cor da Linha": "black"});
+              console.log(data.consumers);
+              return data.consumers[index]?.map(
+                ({ attributes: consumer, geometry: consumer_geometry }) => ({
+                  geometry: new Polyline({
+                    paths: [
+                      [
+                        [PT!.geometry.longitude, PT!.geometry.latitude],
+                        [
+                          consumer_geometry.longitude,
+                          consumer_geometry.latitude,
+                        ],
+                      ],
+                    ],
+                  }),
+                  attributes: {
+                    identificação: "alimentação " + consumer.identificação,
+                    FID: `${consumer.FID}`,
+                    power: consumer.Potência,
+                    lineColor: PT!.attributes.FID,
+                  },
+                })
+              );
+            }),
             ...data.subs.flatMap((sub) => {
               addColor(sub.attributes);
-              console.log(data.trafos);
+              //console.log(data.trafos);
               return data.trafos[sub.attributes.FID]?.map(
                 ({ attributes: trafo, geometry: trafo_geometry }) => ({
                   geometry: new Polyline({
@@ -244,7 +277,7 @@ const mapInterface: MapInterface = {
           await mapInterface.promises["loadMap"];
           mapInterface.layers?.removeAll();
           mapInterface.layers?.addMany(featuresLayers);
-          mapInterface.search.update();   
+          mapInterface.search.update();
           await mapInterface.promises["ready"];
           mapInterface.buildPopPup();
         }

@@ -6,6 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   CON_SE_Info,
   CON_TRAFO_Info,
+  Consumer_Info,
   Trafo_Info,
   erimServerData,
   erim_vec,
@@ -15,58 +16,70 @@ import { revalidateTag } from "next/cache";
 
 export async function getData(): Promise<erimServerData> {
   "use server";
-  let subs: erimServerData["subs"] = JSON.parse(
-    await fs2.readFile("./data/SE_info.json", { encoding: "utf8" })
+
+  //await lockfile.lock("./data/index.json").catch(onlockError);
+
+  const max: { [key: string]: number } = JSON.parse(
+    await fs2.readFile("./data/index.json", encoding)
   );
-  
-  const [CON_SE, CON_TRAFO, ...trafos] = [
+
+  let subs: erimServerData["subs"] = JSON.parse(
+    await fs2.readFile("./data/SE_info.json", encoding)
+  );
+
+  const [CON_SE, CON_TRAFO, trafos, consumers] = [
     JSON.parse(
-      await fs2.readFile("./data/CON_SE.json", { encoding: "utf8" })
+      await fs2.readFile("./data/CON_SE.json", encoding)
     ) as erimServerData["CON_SE"],
     JSON.parse(
-      await fs2.readFile("./data/CON_TRAFO.json", { encoding: "utf8" })
+      await fs2.readFile("./data/CON_TRAFO.json", encoding)
     ) as erimServerData["CON_TRAFO"],
-    ...Object.keys(subs).map((k) => {
-      const file = `./data/SE${k}.json`;
-      return fs.existsSync(file)
-        ? fs2
-            .readFile(file, { encoding: "utf8" })
-            .then((file) => JSON.parse(file) as erim_vec<Trafo_Info>)
-        : Promise.resolve({} as erim_vec<Trafo_Info>);
-    }),
+    (await Promise.all(
+      Object.keys(subs).map((k) => {
+        const file = `./data/SE${k}.json`;
+        return fs.existsSync(file)
+          ? fs2
+              .readFile(file, encoding)
+              .then((file) => JSON.parse(file) as erim_vec<Trafo_Info>)
+          : Promise.resolve({} as erim_vec<Trafo_Info>);
+      })
+    )) as erimServerData["trafos"],
+    (await Promise.all(
+      Object.keys(max)
+        .filter((str) => str.startsWith("PT"))
+        .map(async (key) => {
+          return JSON.parse(
+            await fs2.readFile("./data/" + key + ".json", encoding)
+          ) as erim_vec<Consumer_Info>;
+        })
+    )) as erimServerData["consumers"],
   ];
-  const T = await Promise.all([...trafos])
-  const C: erimServerData["consumers"] = []
-
-  
+ // await lockfile.unlock("./data/index.json");
   return {
     subs: subs,
-    trafos: T,
-    consumers: C,
+    trafos: trafos,
+    consumers: consumers,
     CON_SE: CON_SE,
     CON_TRAFO: CON_TRAFO,
   };
 }
 
-
 export async function POST(request: NextRequest) {
   const a: ClientContent = await request.json();
   let num = a.mainLine;
-  let file = "SE";
+  let file: string;
 
   if (num === undefined) {
     a.info.attributes.FID = 0;
-    file += "_info";
+    file = "SE_info";
   } else if (num < 1000) {
     a.info.attributes.FID = 1000;
-    file += num;
+    file = "SE" + num;
   } else {
-    file += "_PT" + num;
+    file = "PT" + num;
   }
 
-  await lockfile.lock("./data/index.json").catch((err) => {
-    console.log("locking Error");
-  });
+  await lockfile.lock("./data/index.json").catch(onlockError);
 
   const max: { [key: string]: number } = JSON.parse(
     await fs2.readFile("./data/index.json", encoding)
@@ -113,27 +126,31 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   "use server";
-  return NextResponse.json(await getData());//(JSON.stringify());
+  return NextResponse.json(await getData()); //(JSON.stringify());
 }
 
 export async function PUT(request: NextRequest) {
-    "use server";
+  "use server";
   const { info }: ClientContent = await request.json();
   let i = info.attributes.FID!;
   console.log("put:", info);
 
-  let path = `./data/SE${
-    i < 1000 ? "_info" : Math.floor((i - 1000) / 1000)
+  let path = `./data/${
+    i < 1000
+      ? "SE_info"
+      : i < 10000000
+      ? "SE" + Math.floor((i - 1000) / 1000)
+      : "PT" + Math.floor(i / 1000)
   }.json`;
 
-  console.log({ info, path,i });
+  console.log({ info, path, i });
   i %= 1000;
 
   if (fs.existsSync(path)) {
     await lockfile.lock("./data/index.json").catch(onlockError);
     let list: (typeof info)[] = JSON.parse(await fs2.readFile(path, encoding));
     if (i < list.length) {
-      list[i] = {...list[i],...info};
+      list[i] = { ...list[i], ...info };
       await fs2.writeFile(path, JSON.stringify(list));
       await lockfile.unlock("./data/index.json");
       triggerRefresh();
@@ -148,4 +165,5 @@ export async function PUT(request: NextRequest) {
 const encoding = { encoding: "utf8" as BufferEncoding };
 const onlockError = (err: any) => {
   console.log("locking Error");
+  return;
 };

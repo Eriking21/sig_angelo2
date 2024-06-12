@@ -61,7 +61,7 @@ export interface Info_type<T extends 0 | 1 | 2> {
 }
 export type Sub_Info = Info_type<0> & {
   attributes: {
-     ["Cor da Linha"]: string;
+    ["Cor da Linha"]: string;
     Empresa: string;
     Ano: number;
     P1: string;
@@ -107,13 +107,15 @@ export default erimServerData;
 export class erimClientData {
   subs: Sub_Info[];
   trafos: Trafo_Info[][];
+  consumers: Consumer_Info[][];
   CON_SE: CON_SE_Info[];
   CON_TRAFO: CON_TRAFO_Info[];
-  constructor({ subs, trafos, CON_SE, CON_TRAFO }: erimServerData) {
+  constructor({ subs, trafos, CON_SE, CON_TRAFO, consumers }: erimServerData) {
     this.subs = Object.values(subs);
-    this.trafos = Object.values(trafos).map((subVec) => Object.values(subVec));
     this.CON_SE = Object.values(CON_SE);
     this.CON_TRAFO = Object.values(CON_TRAFO);
+    this.trafos = Object.values(trafos).map((V) => Object.values(V));
+    this.consumers = Object.values(consumers).map((V) => Object.values(V));
   }
 }
 //export type Info = Trafo_Info | Sub_Info | Consumer_Info;
